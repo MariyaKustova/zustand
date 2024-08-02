@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useStore } from "../../store";
 import { Loader } from "../../components/Loader";
 import { TodoDialog } from "./components/TodoDialog";
@@ -9,7 +9,12 @@ import TodosList from "./components/TodosList";
 const TodosPage = () => {
   const [editTodoId, setEditTodoId] = useState<number | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
-  const { addTodo, editTodo, todos, isTodosLoading, todosUserIds } = useStore();
+  const { loadTodos, addTodo, editTodo, todos, isTodosLoading, todosUserIds } =
+    useStore();
+
+  useEffect(() => {
+    loadTodos();
+  }, [loadTodos]);
 
   const currentTodo = todos.find((todo) => todo.id === editTodoId);
 

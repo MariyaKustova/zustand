@@ -2,21 +2,18 @@ import React, { useState } from "react";
 
 import { Route, Routes } from "react-router-dom";
 import { Typography } from "@mui/material";
-import { useStore } from "../../store";
 import PostItemPage from "./components/PostCard";
-import { Loader } from "../../components/Loader";
 import PageTitle from "../../components/PageTitle";
 import PostCreateForm from "./components/PostCreateForm";
 import PostsList from "./components/PostsList";
 
 const PostsPageComponent = () => {
-  const { postsLoadingInitial } = useStore();
   const [openCreateForm, setOpenCreateForm] = useState(false);
 
   return (
     <>
       <PageTitle title="Posts" onClick={() => setOpenCreateForm(true)} />
-      {postsLoadingInitial ? <Loader /> : <PostsList />}
+      <PostsList />
       {openCreateForm && (
         <PostCreateForm
           open={openCreateForm}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useStore } from "../../../../store";
 import { Checkbox } from "@mui/material";
 import Controls from "../../../../components/Controls";
@@ -10,22 +10,18 @@ interface TodosListProps {
 }
 
 const TodosList = ({ onEdit }: TodosListProps) => {
-  const { loadTodos, editTodo, todos, todosLoadingId, deleteTodo } = useStore();
-
-  useEffect(() => {
-    loadTodos();
-  }, [loadTodos]);
+  const { editTodo, todos, todosLoadingId, deleteTodo } = useStore();
 
   return (
     <div>
       {todos.map((todo) => (
-        <div key={todo.id} className={s.TodosPage__listItem}>
-          <div className={s.TodosPage__wrapper}>
+        <div key={todo.id} className={s.TodosList__listItem}>
+          <div>
             <Checkbox
               checked={todo.completed}
               onChange={() => editTodo({ ...todo, completed: !todo.completed })}
             />
-            <span className={todo.completed ? s.TodosPage__completedTodo : ""}>
+            <span className={todo.completed ? s.TodosList__completedTodo : ""}>
               {todo.todo}
             </span>
           </div>
