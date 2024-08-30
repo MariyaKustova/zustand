@@ -1,6 +1,7 @@
-import { FormValues, Post, Tag } from "../model/postsTypes";
-import { postsApi } from "../api/postsApi";
 import { StateCreator } from "zustand";
+
+import { FormValues, Post, Tag } from "@model/postsTypes";
+import { postsApi } from "@api/postsApi";
 
 interface PostsStore {
   post: Post | null;
@@ -79,11 +80,7 @@ export const createPostsSlice: StateCreator<PostsSlice> = (set) => ({
         };
 
         set((state) => ({
-          posts: [
-            ...state.posts.map((post) =>
-              post.id === newPost.id ? newPost : post
-            ),
-          ],
+          posts: [...state.posts, newPost],
         }));
       }
     } catch (err) {

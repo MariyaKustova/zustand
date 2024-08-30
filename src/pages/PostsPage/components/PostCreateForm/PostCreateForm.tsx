@@ -12,13 +12,13 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { useStore } from "../../../../store";
+import { usePostsStore } from "@store/index";
+import { FormValues } from "@model/postsTypes";
 import { initialValues } from "./constants";
 import { FieldsNames } from "./types";
-import { FormValues } from "../../../../model/postsTypes";
+import { getRandomInt } from "../../../../utils";
 
 import s from "./PostCreateForm.module.scss";
-import { getRandomInt } from "../../../../utils";
 
 interface PostCreateFormProps {
   open: boolean;
@@ -26,7 +26,7 @@ interface PostCreateFormProps {
 }
 
 const PostCreateForm = ({ open, onClose }: PostCreateFormProps) => {
-  const { tagsList, loadTagsList, addPost, postsUserIds } = useStore();
+  const { tagsList, loadTagsList, addPost, postsUserIds } = usePostsStore();
 
   useEffect(() => {
     loadTagsList();

@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import { useStore } from "../../../../store";
-import { RoutePath } from "../../../../model/baseTypes";
+import { usePostsStore } from "@store/index";
+import { RoutePath } from "@model/baseTypes";
+import Loader from "@core/Loader";
 import PostItem from "../PostItem";
-import { Loader } from "../../../../components/Loader";
 
 import s from "./PostsList.module.scss";
 
 const PostsList = () => {
-  const { postsLoadingInitial, loadPosts, posts } = useStore();
+  const { postsLoadingInitial, loadPosts, posts } = usePostsStore();
 
   useEffect(() => {
     if (!posts.length) {

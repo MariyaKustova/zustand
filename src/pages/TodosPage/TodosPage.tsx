@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useStore } from "../../store";
-import { Loader } from "../../components/Loader";
+
+import { useTodosStore } from "@store/index";
+import Loader from "@core/Loader";
+import PageTitle from "@core/PageTitle";
 import { TodoDialog } from "./components/TodoDialog";
-import PageTitle from "../../components/PageTitle";
 import { getRandomInt } from "../../utils";
 import TodosList from "./components/TodosList";
 
@@ -10,11 +11,13 @@ const TodosPage = () => {
   const [editTodoId, setEditTodoId] = useState<number | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const { loadTodos, addTodo, editTodo, todos, isTodosLoading, todosUserIds } =
-    useStore();
+    useTodosStore();
 
   useEffect(() => {
-    loadTodos();
-  }, [loadTodos]);
+    if (!todos.length) {
+      loadTodos();
+    }
+  }, [loadTodos, todos]);
 
   const currentTodo = todos.find((todo) => todo.id === editTodoId);
 

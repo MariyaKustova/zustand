@@ -1,6 +1,7 @@
-import { Todo } from "../model/todosTypes";
-import { todosApi } from "../api/todosApi";
 import { StateCreator } from "zustand";
+
+import { Todo } from "@model/todosTypes";
+import { todosApi } from "@api/todosApi";
 
 interface TodosStore {
   todos: Todo[];

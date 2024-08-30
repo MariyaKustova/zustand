@@ -1,7 +1,8 @@
 import React from "react";
-import { useStore } from "../../../../store";
 import { Checkbox } from "@mui/material";
-import Controls from "../../../../components/Controls";
+
+import { useTodosStore } from "@store/index";
+import Controls from "@core/Controls";
 
 import s from "./TodosList.module.scss";
 
@@ -10,7 +11,7 @@ interface TodosListProps {
 }
 
 const TodosList = ({ onEdit }: TodosListProps) => {
-  const { editTodo, todos, todosLoadingId, deleteTodo } = useStore();
+  const { editTodo, todos, todosLoadingId, deleteTodo } = useTodosStore();
 
   return (
     <div>
