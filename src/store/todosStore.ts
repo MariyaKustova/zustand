@@ -50,10 +50,7 @@ export const createTodosSlice: StateCreator<TodosStore & TodosActions> = (
     };
 
     try {
-      const newTodo = await todosApi.createTodo(todo);
-      if (newTodo) {
-        set((state) => ({ todos: [...state.todos, newTodo] }));
-      }
+      await todosApi.createTodo(todo);
     } catch (err) {
       console.log(err);
     }
@@ -62,14 +59,7 @@ export const createTodosSlice: StateCreator<TodosStore & TodosActions> = (
   editTodo: async (todo: Todo) => {
     set({ todosLoadingId: todo.id });
     try {
-      const response = await todosApi.editTodo(todo);
-      if (response) {
-        set((state) => ({
-          todos: state.todos.map((todoItem) =>
-            todoItem.id === response.id ? todo : todoItem
-          ),
-        }));
-      }
+      await todosApi.editTodo(todo);
       set({ todosLoadingId: null });
     } catch (err) {
       console.log(err);

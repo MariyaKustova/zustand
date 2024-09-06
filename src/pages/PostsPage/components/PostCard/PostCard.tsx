@@ -13,6 +13,7 @@ import s from "./PostCard.module.scss";
 
 const PostCard = () => {
   const {
+    loadPosts,
     post,
     loadPostById,
     editPost,
@@ -58,8 +59,9 @@ const PostCard = () => {
                 <div className={s.PostCard__wrapper}>
                   <Controls
                     onEdit={() => setEditPostId(post.id)}
-                    onDelete={() => {
-                      deletePost(post.id);
+                    onDelete={async () => {
+                      await deletePost(post.id);
+                      loadPosts();
                       navigate(RoutePath.POSTS);
                     }}
                   />
@@ -70,9 +72,10 @@ const PostCard = () => {
                   open={Boolean(editPostId)}
                   onClose={onCloseDialog}
                   value={post?.title}
-                  onChange={(value: string) => {
+                  onChange={async (value: string) => {
                     if (value.length && post.title !== value) {
-                      editPost({ ...post, title: value });
+                      await editPost({ ...post, title: value });
+                      loadPosts();
                     }
                     onCloseDialog();
                   }}

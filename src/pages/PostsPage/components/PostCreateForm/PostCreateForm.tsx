@@ -26,7 +26,8 @@ interface PostCreateFormProps {
 }
 
 const PostCreateForm = ({ open, onClose }: PostCreateFormProps) => {
-  const { tagsList, loadTagsList, addPost, postsUserIds } = usePostsStore();
+  const { loadPosts, tagsList, loadTagsList, addPost, postsUserIds } =
+    usePostsStore();
 
   useEffect(() => {
     loadTagsList();
@@ -39,11 +40,12 @@ const PostCreateForm = ({ open, onClose }: PostCreateFormProps) => {
   } = useForm<FormValues>({
     defaultValues: initialValues,
   });
-  const onSubmit = (data: FormValues) => {
-    addPost({
+  const onSubmit = async (data: FormValues) => {
+    await addPost({
       ...data,
       userId: postsUserIds[getRandomInt(postsUserIds.length - 1)],
     });
+    loadPosts();
     onClose();
   };
 

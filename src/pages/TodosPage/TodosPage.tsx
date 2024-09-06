@@ -38,9 +38,10 @@ const TodosPage = () => {
               open={Boolean(editTodoId)}
               onClose={onCloseEditDialog}
               value={currentTodo?.todo}
-              onChange={(value: string) => {
+              onChange={async (value: string) => {
                 if (currentTodo && value.length && currentTodo.todo !== value) {
-                  editTodo({ ...currentTodo, todo: value });
+                  await editTodo({ ...currentTodo, todo: value });
+                  loadTodos();
                 }
                 onCloseEditDialog();
               }}
@@ -51,12 +52,13 @@ const TodosPage = () => {
             <TodoDialog
               open={openDialog}
               onClose={onCloseCreateDialog}
-              onChange={(value: string) => {
+              onChange={async (value: string) => {
                 if (value.length) {
-                  addTodo(
+                  await addTodo(
                     value,
                     todosUserIds[getRandomInt(todosUserIds.length - 1)]
                   );
+                  loadTodos();
                 }
                 onCloseCreateDialog();
               }}

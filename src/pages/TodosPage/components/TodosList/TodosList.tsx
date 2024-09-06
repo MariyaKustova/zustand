@@ -11,7 +11,8 @@ interface TodosListProps {
 }
 
 const TodosList = ({ onEdit }: TodosListProps) => {
-  const { editTodo, todos, todosLoadingId, deleteTodo } = useTodosStore();
+  const { loadTodos, editTodo, todos, todosLoadingId, deleteTodo } =
+    useTodosStore();
 
   return (
     <div>
@@ -20,7 +21,10 @@ const TodosList = ({ onEdit }: TodosListProps) => {
           <div>
             <Checkbox
               checked={todo.completed}
-              onChange={() => editTodo({ ...todo, completed: !todo.completed })}
+              onChange={async () => {
+                await editTodo({ ...todo, completed: !todo.completed });
+                loadTodos();
+              }}
             />
             <span className={todo.completed ? s.TodosList__completedTodo : ""}>
               {todo.todo}

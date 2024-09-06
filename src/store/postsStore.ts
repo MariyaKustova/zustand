@@ -58,53 +58,31 @@ export const createPostsSlice: StateCreator<PostsSlice> = (set) => ({
     }
   },
 
-  addPost: async ({ title, body, tags, userId }) => {
+  addPost: ({ title, body, tags, userId }: FormValues & { userId: number }) => {
     try {
-      const response = await postsApi.createPost({
+      const newPost: Omit<Post, "id"> = {
         title,
+        body,
+        tags,
+        reactions: {
+          likes: 0,
+          dislikes: 0,
+        },
+        views: 0,
         userId,
-      });
+      };
 
-      if (response) {
-        const newPost: Post = {
-          id: response.id,
-          title,
-          body,
-          tags,
-          reactions: {
-            likes: 0,
-            dislikes: 0,
-          },
-          views: 0,
-          userId: response.id,
-        };
-
-        set((state) => ({
-          posts: [...state.posts, newPost],
-        }));
-      }
+      postsApi.createPost(newPost);
     } catch (err) {
       console.log(err);
     }
   },
 
-  editPost: async (post) => {
+  editPost: async (post: Post) => {
     set({ postsLoadingId: String(post.id) });
     try {
-      const response = await postsApi.editPost({
-        id: post.id,
-        title: post.title,
-      });
-      if (response) {
-        set((state) => ({
-          posts: [
-            ...state.posts.map((postItem) =>
-              postItem.id === response.id ? post : postItem
-            ),
-          ],
-        }));
-        set({ post });
-      }
+      postsApi.editPost(post);
+      set({ post });
       set({ postsLoadingId: null });
     } catch (err) {
       console.log(err);
